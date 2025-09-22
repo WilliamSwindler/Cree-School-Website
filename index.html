@@ -12,15 +12,91 @@
 		</header>
 		<section>
 			<article>
-				<p>Cree School is a game that helps you learn Cree! This game has quizzes for a bunch of subjects to help learn Cree ie. Nouns, Pronouns, Plurals, and Verb Conjugation. The game also has built-in modding support to add new quizzes. This can be for either new Cree quizzes, or make your own for an Indigenous language you know! This is not intended to teach you Cree, but rather a supplementary resource to practice Duolingo-style!</p>
+				<p>Cree School is a game that helps you learn Cree!</p>
+				<p>This game has quizzes for a bunch of subjects to help learn Cree ie. Nouns, Pronouns, Plurals, and Verb Conjugation.</p>
+				<p>The game also has built-in modding support to add new quizzes. This can be for either new Cree quizzes, or make your own for an Indigenous language you know!</p>
+				<p>This is not intended to teach you Cree, but rather a supplementary resource to practice Duolingo-style!</p>
 			</article>
 		</section>
 		<header>
-			<h1>Download</h1>
+			<h2>Download</h2>
 		</header>
 		<section>
 			<article>
 				<p>Downloads will be available soon!</p>
+			</article>
+		</section>
+		<header>
+			<h2>Modding</h2>
+		</header>
+		<section>
+			<article>
+				<p>To create a data pack, follow the following steps! A basic understanding of json is assumed, but looking at the example you can download should help!</p>
+				<ol>
+					<li>Go into Settings, Game Settings, and enable "Custom Content"</li>
+					<li>Open the root folder and go into "data_packs" if it does not exist, create it.</li>
+					<li>Create a folder, its name should be its "source name" the internal id for the data pack.</li>
+					<li>Go into the folder and create "datapack.json" this will define important elements of the data pack.</li>
+					<li>"datapack.json" needs "source_name" which should be the same as the folder name, "name" which is the name of the pack, "author" which is your name!</li>
+					<li>"datapack.json" also needs "information" which needs "made_for" the version of the game it is made for, and can optionally define "version" and "website".</li>
+					<li>Run the game and your data pack will be loaded.</li>
+					<li>Add content to your data pack.</li>
+					<li>Finally, when you are finished, zip the folder up for distribution!</li>
+				</ol>
+				<p>Download an example data pack here.</p>
+			</article>
+			<article>
+				<p>To create a quiz, follow the following steps!</p>
+				<ol>
+					<li>Create a folder in your data pack folder called "quizzes".</li>
+					<li>Create a json file, it can be named whatever, the game internally uses "quiz_{quiz number}_data.json".</li>
+					<li>The quiz file requires "type" which can be "random_multiple_choice", "four_choices", "this_or_that", or "verb_conjugation". Which type is used affects what data will be required.</li>
+					<li>Next, it requires "id" which is the quiz id. It must be "quiz.{quiz number}".</li>
+					<li>Next, it requires "name" which is a translation key.</li>
+					<li>Next, it requires "questions" which is an array of questions.</li>
+					<li>Creating a question requires "question" which is a translation key for the question, "answer" which is the answer id, and "has_syllabics" which is a boolean that will handle any questions that use Latin + non-Latin alphabets.</li>
+					<li>If the type is "verb_conjugation", questions also require "suffix" and "prefix" which are integers pointing to the morpheme to conjugate a verb. "prefix" can be -1 to disable its requirement.</li>
+					<li>A question can also have "icon" which points to a texture that will appear below the question.</li>
+					<li>After questions is the answers. These depend on the type.</li>
+					<li>If the type is "random_multiple_choice" or "verb_conjugation" it is an array of answers.</li>
+					<li>If the type is "four_choices" it requires four objects, "answer_1", "answer_2", "answer_3", and "answer_4".</li>
+					<li>If the type is "this_or_that" it requires two objects, "answer_1" and "answer_2".</li>
+					<li>However an answer is made, it requires "id" which is the answer id a question will reference, "answer" a translation key for the answer, and "has_syllabics" which is a boolean that will handle any questions that use Latin + non-Latin alphabets.</li>
+					<li>An answer can also have "sound" which points to a sound that will appear as a pronunciation box next to the answer.</li>
+					<li>If the type is "verb_conjugation" it also requires an array of "morphemes".</li>
+					<li>A morpheme takes in "is_suffix" which is a boolean that will either put it in the "suffix" or "prefix" category for verb conjugation.</li>
+					<li>Next a morpheme takes in "name" which is a translation key.</li>
+					<li>Final a morpheme takes in "rule" which applies various things to a base infinitive. If it is not required it can be "none". To add a letter to the infinitive, start with "+" then the letter, "/" means when, and "v" is the only valid one and will apply if the morpheme is followed by a vowel. It will add before the infinitive if it a prefix and after if it is a suffix. If a letter is replaced start with ">", the letter to be replaced with, "/" then when, only "l" is currently valid, which is last. Then, "/" and the later to be replaced.</li>
+					<li>After answers and/or morphemes, "next_quiz" is optional to create a quick link to the next quiz, which takes in the "id" field of the quiz it links to.</li>
+				</ol>
+				<p>Download an example data pack above that contains all example quizzes.</p>
+			</article>
+			<article>
+				<p>To create a translation file, follow the following steps!</p>
+				<ol>
+					<li>In your data pack folder create "translations.json" and a folder called "lang".</li>
+					<li>"translations.json" should be an array. To create a translation for a valid language, add "file" which points to a file in the "lang" folder and "code" which defines the language it is for. Currently, only "en_us" is valid.</li>
+					<li>In "lang" folder create "{language code}.json" and in it you can put all translation strings and their translations.</li>
+				</ol>
+				<p>Download an example data pack above that contains an example lang.</p>
+			</article>
+			<article>
+				<p>To add a texture, follow the following steps!</p>
+				<ol>
+					<li>In your data pack folder create "textures.json" and a folder called "textures".</li>
+					<li>"textures.json" should be an array. To create a texture, add "{texture_name}" which points to a file in the "textures" folder. It should be a ".png" though the "textures.json" decleration should not have neither the "textures/" path nor ".png" extension.</li>
+					<li>In "textures" folder put your desired texture.</li>
+				</ol>
+				<p>Download an example data pack above that contains an example texture.</p>
+			</article>
+			<article>
+				<p>To add a sound, follow the following steps!</p>
+				<ol>
+					<li>In your data pack folder create "sounds.json" and a folder called "sounds".</li>
+					<li>"sounds.json" should be an array. To create a sound, add "{sound_name}" which points to a file in the "sounds" folder. It should be a ".ogg" though the "sounds.json" decleration should not have neither the "sounds/" path nor ".ogg" extension.</li>
+					<li>In "sounds" folder put your desired sound.</li>
+				</ol>
+				<p>Download an example data pack above that contains an example sound.</p>
 			</article>
 		</section>
 	</body>
